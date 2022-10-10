@@ -14,6 +14,7 @@
 		"allowlist": {
 			"all": true
 		},
+		"macOSPrivateApi": true,
 		"bundle": {
 			"active": true,
 			"category": "Music",
@@ -58,13 +59,13 @@
 		},
 		"windows": [
 			{
-				"fullscreen": false,
 				"height": 150,
 				"resizable": false,
 				"title": "",
 				"fileDropEnabled": false,
 				"width": 350,
-				"decorations": false
+				"decorations": false,
+				"transparent": true
 			}
 		]
 	}

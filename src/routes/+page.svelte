@@ -8,7 +8,7 @@
 	import { size } from '$lib/stores/window'
 
 	const buttonClasses =
-		'text-white h-8 w-8 cursor-default hover:text-spotify-green'
+		'text-white h-9 w-9 cursor-default hover:text-spotify-green'
 
 	$: artworkSize = $size.height - 60
 	$: metadataWidth = $size.width - artworkSize - 50
@@ -32,7 +32,7 @@
 </script>
 
 {#if $trackInfo && $playerState}
-	<div class="flex h-full w-full items-center px-5">
+	<div class="flex h-full w-full items-center px-5 mt-4">
 		<img
 			class="object-contain"
 			style="height: {artworkSize}px; width: {artworkSize}px;"

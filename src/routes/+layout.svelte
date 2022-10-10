@@ -35,25 +35,24 @@
 	}
 </script>
 
-<div class="flex flex-col bg-zinc-900 h-screen w-screen">
-	<div data-tauri-drag-region class="flex fixed w-full items-center p-1">
-		<button
-			on:click={closeWindow}
-			class="cursor-default text-white h-5 w-5 hover:text-spotify-green"
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-				stroke="currentColor"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M6 18L18 6M6 6l12 12"
-				/>
-			</svg>
+<div
+	class="flex flex-col bg-zinc-900 bg-opacity-70 h-screen w-screen"
+	style="border-radius: 10px;"
+>
+	<div data-tauri-drag-region class="flex fixed w-full items-center p-2">
+		<button on:click={closeWindow} class="group cursor-default p-0.5">
+			<div class="h-[14px] w-[14px] rounded-full bg-red-500 text-zinc-900">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 20 20"
+					fill="currentColor"
+					class="opacity-0 group-hover:opacity-100"
+				>
+					<path
+						d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"
+					/>
+				</svg>
+			</div>
 		</button>
 	</div>
 	<slot />
