@@ -7,7 +7,8 @@
 	import { trackInfo, playerState } from '$lib/stores/player'
 	import { size } from '$lib/stores/window'
 
-	const buttonClasses = 'text-white h-8 w-8 cursor-default hover:text-gray-300'
+	const buttonClasses =
+		'text-white h-8 w-8 cursor-default hover:text-spotify-green'
 
 	$: artworkSize = $size.height - 60
 	$: metadataWidth = $size.width - artworkSize - 50

@@ -63,7 +63,8 @@
 				"resizable": false,
 				"title": "",
 				"fileDropEnabled": false,
-				"width": 350
+				"width": 350,
+				"decorations": false
 			}
 		]
 	}
