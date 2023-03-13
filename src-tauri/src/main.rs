@@ -13,7 +13,6 @@ use tauri::{
     AppHandle, CustomMenuItem, Manager, PhysicalPosition, PhysicalSize, State, SystemTray,
     SystemTrayEvent, SystemTrayMenu, Window,
 };
-use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
 
 #[derive(Clone, serde::Serialize)]
 struct Event {
@@ -180,16 +179,6 @@ fn main() {
         .setup(|app| {
             app.set_activation_policy(tauri::ActivationPolicy::Accessory);
             place_window(app.get_window("main").unwrap());
-
-            let window = app.get_window("main").unwrap();
-            apply_vibrancy(
-                &window,
-                NSVisualEffectMaterial::HudWindow,
-                None,
-                Some(10.0_f64),
-            )
-            .expect("Unable to apply window vibrancy");
-
             Ok(())
         })
         .manage(EventHandlers {

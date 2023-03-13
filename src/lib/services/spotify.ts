@@ -1,48 +1,12 @@
+import {
+	TrackKeyMappings,
+	type Track,
+	type PlayerStateInfo,
+	PlayerStateKeyMappings,
+	SpotifyCommand
+} from '$lib/models/spotify'
+import { playerState } from '$lib/stores/player'
 import { invoke } from '@tauri-apps/api/tauri'
-
-export interface Track {
-	title: string
-	artist: string
-	album: string
-	duration: number
-	artworkUrl: string
-}
-
-const TrackKeyMappings: {
-	[key in keyof Track]: string
-} = {
-	title: 'name',
-	artist: 'artist',
-	album: 'album',
-	duration: 'duration',
-	artworkUrl: 'artwork url'
-}
-
-export interface PlayerStateInfo {
-	state: PlayerState
-	playbackPosition: number
-}
-
-const PlayerStateKeyMappings: {
-	[key in keyof PlayerStateInfo]: string
-} = {
-	state: 'player state',
-	playbackPosition: 'player position'
-}
-
-export enum SpotifyCommand {
-	NextTrack = 'next track',
-	PrevTrack = 'previous track',
-	PlayPause = 'playpause',
-	Pause = 'pause',
-	Play = 'play'
-}
-
-export enum PlayerState {
-	Playing = 'playing',
-	Paused = 'paused',
-	Stopped = 'stopped'
-}
 
 export async function getCurrentTrackInfo(): Promise<Track> {
 	const trackInfoKeys = Object.values(TrackKeyMappings)
@@ -51,18 +15,20 @@ export async function getCurrentTrackInfo(): Promise<Track> {
 
 	let output: string = await invoke('get_current_track_info', { keys: keysStr })
 
-	console.log(output)
-
 	output = output.replace(/{}\s/g, '')
 	const values = output.split(',')
 
-	let track = {}
+	let track: Record<string, any> = {}
 	values.forEach((val, i) => {
 		track = {
 			...track,
-			[trackInfoStoreKeys[i]]: val
+			[trackInfoStoreKeys[i]]: val.replace(/^\s+|\s+$/g, '')
 		}
 	})
+
+	if (track.duration) {
+		track.duration = parseFloat(track.duration) / 1000
+	}
 
 	return track as Track
 }
@@ -77,17 +43,37 @@ export async function getPlayerState(): Promise<PlayerStateInfo> {
 	output = output.replace(/{}\s/g, '')
 	const values = output.split(',')
 
-	let state = {}
+	let state: Record<string, any> = {}
 	values.forEach((val, i) => {
 		state = {
 			...state,
-			[stateInfoStoreKeys[i]]: val
+			[stateInfoStoreKeys[i]]: val.replace(/^\s+|\s+$/g, '')
 		}
 	})
+
+	if (state.playbackPosition) {
+		state.playbackPosition = parseFloat(state.playbackPosition)
+	}
 
 	return state as PlayerStateInfo
 }
 
 export async function sendSpotifyCommand(cmd: SpotifyCommand) {
 	await invoke('send_spotify_command', { command: cmd })
+}
+
+export function startPlaybackTicker(): number {
+	return setInterval(() => {
+		playerState.update((state) => {
+			if (!state) return state
+			return {
+				...state,
+				playbackPosition: state.playbackPosition + 1
+			}
+		})
+	}, 1000)
+}
+
+export function stopPlaybackTicker(timer: number) {
+	clearInterval(timer)
 }

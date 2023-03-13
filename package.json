@@ -1,28 +1,27 @@
 {
 	"name": "spotify-mini-player",
 	"private": true,
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "vite preview",
 		"tauri": "tauri"
 	},
 	"dependencies": {
-		"@tauri-apps/api": "^1.1.0"
+		"@tauri-apps/api": "^1.2.0"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-static": "next",
-		"@sveltejs/kit": "next",
-		"@tauri-apps/cli": "^1.1.1",
+		"@sveltejs/adapter-static": "^1.0.0",
+		"@sveltejs/kit": "^1.0.0",
+		"@tauri-apps/cli": "^1.2.0",
 		"prettier": "^2.7.1",
 		"prettier-plugin-svelte": "^2.7.1",
 		"svelte": "^3.50.1",
 		"svelte-preprocess": "^4.10.6",
-		"tailwindcss": "^3.1.8",
+		"tailwindcss": "^3.2.2",
 		"tslib": "^2.3.1",
 		"typescript": "^4.8.4",
-		"vite": "^3.1.0"
+		"vite": "^4.0.0"
 	}
 }

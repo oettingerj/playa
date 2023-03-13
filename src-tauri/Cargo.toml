@@ -1,6 +1,6 @@
 [package]
 name = "mini-player"
-version = "0.0.0"
+version = "0.0.1"
 description = "A Tauri App"
 authors = ["you"]
 license = ""
@@ -11,14 +11,14 @@ rust-version = "1.57"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.1", features = [] }
+tauri-build = { version = "1.2", features = [] }
 
 [dependencies]
 block = "0.1.6"
 cocoa = "0.24.0"
 objc = { version = "0.2.7" }
 serde = "1.0.145"
-tauri = { version = "1.1", features = ["api-all", "macos-private-api", "system-tray"] }
+tauri = { version = "1.2", features = ["api-all", "system-tray"] }
 window-vibrancy = "0.3.0"
 
 [features]

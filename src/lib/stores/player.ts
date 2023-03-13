@@ -1,4 +1,4 @@
-import type { PlayerStateInfo, Track } from '$lib/services/spotify'
+import type { PlayerStateInfo, Track } from '$lib/models/spotify'
 import { writable, type Writable } from 'svelte/store'
 
 export const trackInfo: Writable<Track | null> = writable(null)
