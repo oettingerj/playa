@@ -2,7 +2,6 @@
 	import '../app.css'
 	import { onDestroy, onMount } from 'svelte'
 	import { invoke } from '@tauri-apps/api/tauri'
-	import { appWindow } from '@tauri-apps/api/window'
 	import { PlayerState } from '$lib/models/spotify'
 	import { listen } from '@tauri-apps/api/event'
 	import { trackInfo, playerState } from '$lib/stores/player'
@@ -31,9 +30,9 @@
 		}
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		initPlayer().then(initTimer)
-		return listen('playback-state-changed', async () => {
+		return await listen('playback-state-changed', async () => {
 			await initPlayer()
 			initTimer()
 		})
@@ -47,10 +46,6 @@
 		invoke('remove_spotify_event_observers')
 		if (timer) stopPlaybackTicker(timer)
 	})
-
-	function closeWindow() {
-		appWindow.hide()
-	}
 </script>
 
 <div class="flex flex-col bg-zinc-900 h-screen w-screen">

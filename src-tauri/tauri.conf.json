@@ -58,11 +58,11 @@
 		},
 		"windows": [
 			{
-				"height": 350,
-				"resizable": false,
+				"width": 300,
+				"height": 400,
 				"title": "",
+				"resizable": true,
 				"fileDropEnabled": false,
-				"width": 350,
 				"acceptFirstMouse": true,
 				"titleBarStyle": "Overlay"
 			}

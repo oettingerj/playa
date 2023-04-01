@@ -14,6 +14,7 @@ export async function getCurrentTrackInfo(): Promise<Track> {
 	const keysStr = trackInfoKeys.join(',')
 
 	let output: string = await invoke('get_current_track_info', { keys: keysStr })
+	console.log(output)
 
 	output = output.replace(/{}\s/g, '')
 	const values = output.split(',')

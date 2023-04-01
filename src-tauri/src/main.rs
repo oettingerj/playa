@@ -178,7 +178,8 @@ fn main() {
     tauri::Builder::default()
         .setup(|app| {
             app.set_activation_policy(tauri::ActivationPolicy::Accessory);
-            place_window(app.get_window("main").unwrap());
+            let window = app.get_window("main").unwrap();
+            place_window(window);
             Ok(())
         })
         .manage(EventHandlers {
