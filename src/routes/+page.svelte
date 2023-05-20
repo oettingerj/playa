@@ -45,16 +45,21 @@
 			alt="album artwork"
 		/>
 		<div
-			class="flex items-center justify-center grow w-full p-2 backdrop-blur-md bg-gray-900"
+			class="absolute bottom-0 flex items-center justify-center w-full p-2 metadata"
 		>
+			<progress
+				class="absolute top-0 w-full h-[2px]"
+				value={$playerState.playbackPosition}
+				max={$trackInfo.duration}
+			/>
 			<div class="flex flex-col items-center justify-between select-none">
 				<div class="flex flex-col gap-1 items-center">
 					<span
-						class="font-semibold text-sm text-slate-50 truncate cursor-default"
+						class="font-semibold text-sm text-slate-50 truncate text-contrast cursor-default"
 						style="max-width: {metadataWidth}px;">{$trackInfo.title}</span
 					>
 					<span
-						class="font-normal text-xs text-gray-300 truncate cursor-default"
+						class="font-normal text-xs text-gray-100 truncate text-contrast cursor-default"
 						style="max-width: {metadataWidth}px;">{$trackInfo.artist}</span
 					>
 				</div>
@@ -75,11 +80,6 @@
 				</div>
 			</div>
 		</div>
-		<progress
-			class="absolute bottom-0 w-full h-[3px]"
-			value={$playerState.playbackPosition}
-			max={$trackInfo.duration}
-		/>
 	</div>
 {:else}
 	No item playing
@@ -91,6 +91,13 @@
 	}
 
 	progress::-webkit-progress-bar {
-		@apply bg-gray-400/50;
+		background: inherit;
+		backdrop-filter: brightness(95%);
+		-webkit-backdrop-filter: brightness(95%);
+	}
+
+	.metadata {
+		backdrop-filter: blur(12px) brightness(85%);
+		-webkit-backdrop-filter: blur(12px) brightness(85%);
 	}
 </style>

@@ -114,30 +114,17 @@ fn handle_system_tray_event(app: &AppHandle, event: SystemTrayEvent) {
             ..
         } => {
             let window = app.get_window("main").unwrap();
-            let item_handle = app.tray_handle().get_item("show_hide");
-            item_handle
-                .set_title(if window.is_visible().unwrap() {
-                    "Hide"
-                } else {
-                    "Show"
-                })
-                .unwrap();
+            if window.is_visible().unwrap() {
+                window.hide().unwrap();
+            } else {
+                window.show().unwrap();
+            }
         }
         SystemTrayEvent::MenuItemClick { id, .. } => {
             let item_handle = app.tray_handle().get_item(&id);
             match id.as_str() {
                 "quit" => {
                     std::process::exit(0);
-                }
-                "show_hide" => {
-                    let window = app.get_window("main").unwrap();
-                    if window.is_visible().unwrap() {
-                        window.hide().unwrap();
-                        item_handle.set_title("Show").unwrap();
-                    } else {
-                        window.show().unwrap();
-                        item_handle.set_title("Hide").unwrap();
-                    }
                 }
                 _ => {}
             }
@@ -170,9 +157,8 @@ fn place_window(window: Window) {
 }
 
 fn main() {
-    let show_hide = CustomMenuItem::new("show_hide".to_string(), "Hide");
     let quit = CustomMenuItem::new("quit".to_string(), "Quit Mini Player");
-    let tray_menu = SystemTrayMenu::new().add_item(show_hide).add_item(quit);
+    let tray_menu = SystemTrayMenu::new().add_item(quit);
     let tray = SystemTray::new().with_menu(tray_menu);
 
     tauri::Builder::default()
@@ -194,6 +180,13 @@ fn main() {
         ])
         .system_tray(tray)
         .on_system_tray_event(|app, event| handle_system_tray_event(app, event))
+        .on_window_event(|event| match event.event() {
+            tauri::WindowEvent::CloseRequested { api, .. } => {
+              event.window().hide().unwrap();
+              api.prevent_close();
+            }
+            _ => {}
+          })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

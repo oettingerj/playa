@@ -14,7 +14,6 @@ export async function getCurrentTrackInfo(): Promise<Track> {
 	const keysStr = trackInfoKeys.join(',')
 
 	let output: string = await invoke('get_current_track_info', { keys: keysStr })
-	console.log(output)
 
 	output = output.replace(/{}\s/g, '')
 	const values = output.split(',')
@@ -69,10 +68,10 @@ export function startPlaybackTicker(): number {
 			if (!state) return state
 			return {
 				...state,
-				playbackPosition: state.playbackPosition + 1
+				playbackPosition: state.playbackPosition + 0.1
 			}
 		})
-	}, 1000)
+	}, 100)
 }
 
 export function stopPlaybackTicker(timer: number) {
